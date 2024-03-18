@@ -12,22 +12,32 @@ function keyPressed() {
   }
 }
 
+function sigmoid(i) {
+    i = Math.abs(i);
+    return 1 / (1 + Math.pow(Math.E, -i));
+}
+
 function draw() {
-  background(0);
+  background("#111");
   colorMode(HSL, 100);
   angleMode(DEGREES);
 
   let step = 20;
+  let normalized_mouseX = (width / 2 - mouseX); // center of canvas is the zero-point now
   translate(width / 2, height / 2);
   let base_color = 17;
+
   if (is_dynamic) {
     base_color = mouseY / 20;
   }
+
   for (let i = 0; i < 35; i++) {
     let quantum = step * i;
     // fill(17 + quantum*0.4, 100, 50);
     fill(base_color + quantum * 0.4, 100, 50);
-    rotate((mouseX / width) * 20, createVector(width, height));
+    rotate((normalized_mouseX / width) * 25, createVector(width, height));
+    // rotate((normalized_mouseX / width) * 20, createVector(width, height));
+    // rotate((mouseX / width) * 20, createVector(width, height));
     rect(0, 0, max(400 - 2 * quantum, 0), max(400 - 2 * quantum, 0));
   }
 }
